@@ -30,11 +30,13 @@ class Persona < Individuo
 
 		@x=@x+randx
 		@y=@y+randy
+
+		puts "#{self.class} #{@nombre} corrio a la posicion #{@x},#{@y}"
 	end
 
 	def gritar(arrayObjetos)
 		if enPeligro?($rangoAlcance,elmasCercano?(arrayObjetos))
-			puts 'ahhhhhhhhhhh ahhhhhhhhhh ahhhhhhhhhh!!!'
+			puts "#{self.class} #{@nombre} grita ahhhhhhhhhhh ahhhhhhhhhh ahhhhhhhhhh!!!"
 		end
 	end
 

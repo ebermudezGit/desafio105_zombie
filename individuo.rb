@@ -5,14 +5,14 @@ class Individuo
 	$max_x=10
 	$max_y=10
 	$direcciones=['ejeX','ejeY','ejeXY']
-	$randNombre=['Juan','Enrique','Enrique2','Perengano','Mengano','Ruben']
+	$randNombre=['Juan','Enrique','Enrique2','Perengano','Mengano','Ruben',"Gssd","Chona","Tita"]
 	$rangoAlcance=3
 	$rangoMuerte=1
 
 	attr_accessor :nombre,:x,:y
 	attr_reader :muerto
 
-	def initialize(nombre=$randNombre.sample, x = rand(1..10),y = rand(1..10))
+	def initialize(nombre=$randNombre.sample+rand(100).to_s, x = rand(1..10),y = rand(1..10))
 		@nombre=nombre
 		@x=x
 		@y=y
@@ -20,7 +20,7 @@ class Individuo
 	end
 
 	def info
-		puts "#{self.class} #{@nombre} pos: #{@x},#{@y}"
+		puts "#{self.class} #{@nombre} posicion Actual: #{@x},#{@y}"
 	end
 
 	def estaAlcance?(rangoAlcance,objMasCercano)
@@ -85,7 +85,7 @@ class Individuo
 	def muere?(arrayObjetos)
 		objMasCercano=elmasCercano?(arrayObjetos)
 		
-		if objMasCercano==nil or rangoAlcance==nil
+		if objMasCercano==nil
 			return false
 		end
 		

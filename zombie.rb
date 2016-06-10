@@ -30,11 +30,13 @@ class Zombie < Individuo
 
 		@x=@x+randx
 		@y=@y+randy
+
+		puts "#{self.class} #{@nombre} camino a la posicion #{@x},#{@y}"
 	end
 
 	def hablar(arrayObjetos)
 		if estaAlcance?($rangoAlcance,elmasCercano?(arrayObjetos))
-			puts 'BRAINNSS!!!'
+			puts "#{self.class} #{@nombre} dice BRAINNSS!!!"
 		end
 	end
 
