@@ -34,18 +34,24 @@ class Individuo
 		true
 	end
 
+	def reglaDistanciaXY
+		if $direcciones.include? 'ejeXY'
+			-1
+		else
+			0
+		end
+	end
+
 	def distancia?(x1,y1,x2,y2)
-		sumX=0,sumY=0,distancia = -1
+		sumX=0,sumY=0,distancia = reglaDistanciaXY
 		sumX=(x1-x2).abs
 		sumY=(y1-y2).abs
 
 		if sumX==sumY
-			distancia=sumX+1
+			distancia= distancia+sumX+1
 		else
 			distancia=sumX+sumY
 		end
-
-		return distancia
 	end
 
 	#Arreglo de Objetos devuelve el mas Cercano
