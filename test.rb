@@ -9,7 +9,6 @@ persona=Persona.new('Enrique',6,4)
 personas = Array.new(6){Persona.new()}
 zombies = Array.new(4){Zombie.new()}
 
-puts zombie.distancia?(4,4,4,4)
 
 zombie.info
 persona.info
@@ -22,3 +21,7 @@ zombie.info
 persona.info
 zombie.hablar(personas)
 persona.gritar(zombies)
+
+persona.items<<6
+persona.items<<8
+print persona.items<<5

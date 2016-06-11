@@ -10,13 +10,14 @@ class Individuo
 	$rangoMuerte=1
 
 	attr_accessor :nombre,:x,:y
-	attr_reader :muerto
+	attr_reader :muerto,:items
 
 	def initialize(nombre=$randNombre.sample+rand(100).to_s, x = rand(1..10),y = rand(1..10))
 		@nombre=nombre
 		@x=x
 		@y=y
 		@muerto=0
+		@items=[]
 	end
 
 	def info
@@ -24,13 +25,11 @@ class Individuo
 	end
 
 	def estaAlcance?(rangoAlcance,objMasCercano)
-		if objMasCercano==nil or rangoAlcance==nil
-			return false
-		end
+
+		return false if objMasCercano==nil or rangoAlcance==nil
 		
-		if distancia?(@x,@y,objMasCercano.x,objMasCercano.y)>rangoAlcance
-			return false
-		end
+		return false if distancia?(@x,@y,objMasCercano.x,objMasCercano.y)>rangoAlcance
+
 		true
 	end
 
@@ -47,59 +46,66 @@ class Individuo
 		sumX=(x1-x2).abs
 		sumY=(y1-y2).abs
 
-		if sumX==sumY
-			distancia= distancia+sumX+1
-		else
-			distancia=sumX+sumY
-		end
+		sumX==sumY && sumY==0 ? 0 : sumX==sumY ? distancia+sumX+1 : sumX+sumY
 	end
 
-	#Arreglo de Objetos devuelve el mas Cercano
 	def elmasCercano?(arrayObjetos)
-		if arrayObjetos == nil
-			return nil
-		end
 
-		distanciaMin=nil
-		objetoMin=nil
+		return nil if arrayObjetos == nil
+
+		distanciaMin=nil;objetoMin=nil
 
 		arrayObjetos.each do |objeto|
-			if objeto == nil
-				next
-			end
+			next if objeto == nil
 
-			if objeto.class==self.class or ['Zombie','Persona'].include? self.class
-				next
-			end
+			next if objeto.class==self.class or ['Zombie','Persona'].include? self.class
 			
 			distancia=distancia?(@x,@y,objeto.x,objeto.y)
 
 			if distanciaMin==nil
-				distanciaMin=distancia
-				objetoMin=objeto
+				distanciaMin=distancia;				objetoMin=objeto 
 			end
 
 			if distancia<distanciaMin
-				distanciaMin=distancia
-				objetoMin=objeto
+				distanciaMin=distancia;				objetoMin=objeto 
 			end
 		end
-
-		return objetoMin
+		objetoMin
 	end
 
 	def muere?(arrayObjetos)
 		objMasCercano=elmasCercano?(arrayObjetos)
-		
-		if objMasCercano==nil
-			return false
-		end
+		return false if objMasCercano==nil
 		
 		if distancia?(@x,@y,objMasCercano.x,objMasCercano.y)<= $rangoMuerte
 			@muerto=1
 			return true	
 		end
 		false
+	end
+
+	def validaLimiteX(randx)
+		if @x+randx<$min_x
+			randx=@x-$min_x
+		elsif @x+randx>$max_x
+			randx=$max_x-@x
+		end
+
+		randx
+	end
+	
+	def validaLimiteY(randy)
+		if @y+randy<$min_y
+			randy=@y-$min_y
+		elsif @y+randy>$max_y
+			randy=$max_y-@y
+		end
+		randy
+	end
+
+	def setNuevasCoordenadas(randx,randy)
+		@x+=validaLimiteX(randx)
+		@y+=validaLimiteY(randy)
 	end
 
 end

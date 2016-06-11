@@ -2,9 +2,9 @@ require './procesos'
 require './zombie'
 require './persona'
 
-maximoCiclos=20
-numZombies = 1
-numPersonas = 9
+maximoCiclos=3
+numZombies = 5
+numPersonas = 5
 
 @personas = Array.new(numPersonas){Persona.new()}
 @zombies = Array.new(numZombies){Zombie.new()}
@@ -28,7 +28,7 @@ def limpiarArregloZombie
 end
 
 def turnoPersonas
-	@personas.each_with_index do |persona,index|
+	@personas.each do |persona|
 		persona.muere?(@zombies)
 		if persona.muerto==1
 			persona.gritar(@zombies)
@@ -40,14 +40,13 @@ def turnoPersonas
 	end
 
 	limpiarArregloPersonas
-
 end
 
 def turnoZombies
 	@zombies.each_with_index do |zombie,index|
 		zombie.muere?(@zombies)
 		if zombie.muerto==1
-			puts "La zombie #{zombie.nombre} fue atacado por una Persona y a Muerto!!"
+			puts "El zombie #{zombie.nombre} fue atacado por una Persona y a Muerto!!"
 			next
 		end
 		zombie.caminar
